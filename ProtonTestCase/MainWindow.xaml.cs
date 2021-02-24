@@ -76,5 +76,15 @@ namespace ProtonTestCase
         }
 
         #endregion
+
+        private void mGraphicsClear_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mGraphicsGenerateRandom_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

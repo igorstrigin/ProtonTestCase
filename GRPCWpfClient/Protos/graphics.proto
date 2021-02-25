@@ -8,7 +8,7 @@ service Graphics {
   // Sends a greeting
   rpc GetRandomGraphic (PointsCount) returns (PointsArray);
   rpc GetCustomGraphic (PointsArray) returns (PointsArray);
-  rpc GetGraphicFromFile (GraphicNumber) returns (PointsArray);
+  rpc GetGraphicsFromFile (EmptyMessage) returns (GraphicsArray);
 }
 
 // The request message containing the user's name.
@@ -21,6 +21,11 @@ message PointsArray {
   repeated double graphicPoints = 1;
 }
 
-message GraphicNumber {
-	int32 graphicNumber = 1;
+message GraphicsArray {
+	repeated PointsArray lines = 1;
+}
+
+message EmptyMessage
+{
+	bool ok = 1;
 }

@@ -9,7 +9,7 @@
     <Grid>
         <Menu>
             <MenuItem Header="{DynamicResource m_File}">
-                <MenuItem Name="mLoad" Header="{DynamicResource m_Load}"></MenuItem>
+                <MenuItem Name="mLoad" Header="{DynamicResource m_Load}" Click="mLoad_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="{DynamicResource m_Language}" Name="menuLanguage">
                 <MenuItem Header="{DynamicResource m_ru_Ru}"/>

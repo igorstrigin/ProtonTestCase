@@ -92,12 +92,25 @@ namespace ProtonTestCase.ViewModels
             for (int point = 0; point < line.Length; point++)
                 newLine.Add(new ObservableValue(line[point]));
 
-            Line.Values = newLine;
-
-            
+            Line.Values = newLine;  
 
             Graphics.Add(Line);
+        }
 
+        public void AddNewLines(List<List<double>> lines)
+        {
+            foreach (var line in lines)
+            {
+                Line = new LineSeries();
+                var newLine = new ChartValues<ObservableValue>();
+
+                for (int point = 0; point < line.Count; point++)
+                    newLine.Add(new ObservableValue(line[point]));
+
+                Line.Values = newLine;
+
+                Graphics.Add(Line);
+            }
         }
 
         public void ChangeFirstLine() 

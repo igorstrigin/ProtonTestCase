@@ -50,11 +50,11 @@ namespace GRPCServer.Services.Services
             return Task.FromResult(result);
         }
 
-        public async Task<double[]> GetGraphicFromFile(int graphicNumber = 1)
+        public async Task<List<List<double>>> GetGraphicsFromFile()
         {
-            List<double> points = new List<double>();
+            List<List<double>> lines = new List<List<double>>();
 
-            string path = Environment.CurrentDirectory + "GraphicPoints.txt";
+            string path = Directory.GetCurrentDirectory() + "\\GraphicPoints.txt";
 
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate)) 
             {
@@ -66,13 +66,29 @@ namespace GRPCServer.Services.Services
 
                 string[] Graphics = textFromFile.Split(';');
 
-                string[] pointsText = Graphics[graphicNumber - 1].Split(',');
+                
 
-                foreach (var point in pointsText)
-                    points.Add(Convert.ToDouble(point));
+                foreach (var line in Graphics)
+                {
+                    string[] pointsText = line.Split(',');
+                    List<double> points = new List<double>();
+
+                    //проверка на парсинг нулевой строки
+                    if (pointsText.Length == 1 && pointsText[0] == "")
+                        break;
+
+                    foreach (var point in pointsText)
+                        points.Add(Convert.ToDouble(point));
+
+                    lines.Add(points);
+                }
+
+                
+
+                
             }
 
-            return points.ToArray();
+            return lines;
 
         }
     }

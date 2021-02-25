@@ -9,6 +9,6 @@ namespace GRPCServer.Services.Interfaces
     {
         Task<double[]> GenerateRandomGraphic(int pointsCount);
         Task<double[]> GenerateCustomGraphic(params double[] pointsArray);
-        Task<double[]> GetGraphicFromFile(int graphicNumber);
+        Task<List<List<double>>> GetGraphicsFromFile();
     }
 }

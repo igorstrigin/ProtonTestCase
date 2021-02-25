@@ -105,6 +105,8 @@ namespace ProtonTestCase
             PointsArray reply = await client.GetRandomGraphicAsync(new PointsCount() {PointsCount_ = 5 });
 
             VM.AddNewLine(reply.GraphicPoints.ToArray());
+
+            
             
             //VM.AddNewLine();
 
@@ -132,6 +134,28 @@ namespace ProtonTestCase
             
         }
 
-        
+        private async void mLoad_Click(object sender, RoutedEventArgs e)
+        {
+            var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            var client = new Graphics.GraphicsClient(channel);
+
+
+
+            GraphicsArray reply = await client.GetGraphicsFromFileAsync(new EmptyMessage() { Ok = true });
+
+            List<List<double>> lines = new List<List<double>>();
+
+            foreach (var pointsArray in reply.Lines)
+            {
+                List<double> line = new List<double>();
+
+                foreach (var point in pointsArray.GraphicPoints)
+                    line.Add(point);
+
+                lines.Add(line);
+            }
+
+            VM.AddNewLines(lines);
+        }
     }
 }

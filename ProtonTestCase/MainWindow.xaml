@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProtonTestCase"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -14,9 +14,18 @@
                 <MenuItem Header="{DynamicResource m_en_US}"/>
             </MenuItem>
             <MenuItem Header="{DynamicResource m_Graphics}">
-                <MenuItem Name="mGraphicsGenerateRandom" Header="{DynamicResource m_Graphics_Generate}"/>
-                <MenuItem Name="mGraphicsClear" Header="{DynamicResource m_Graphics_Clear}"/>
+                <MenuItem Name="mGraphicsGenerateRandom" Header="{DynamicResource m_Graphics_Generate}" Click="mGraphicsGenerateRandom_Click"/>
+                <MenuItem Name="mGraphicsClear" Header="{DynamicResource m_Graphics_Clear}" Click="mGraphicsClear_Click"/>
+                <MenuItem Name="mChangeGraphic" Click="mChangeGraphic_Click" Header="{DynamicResource m_ChangeGraphic}"/>
             </MenuItem>
         </Menu>
+        <lvc:CartesianChart Name="chartMain" Series="{Binding Graphics, UpdateSourceTrigger=PropertyChanged}" DataClick="chartMain_DataClick" LegendLocation="Right" Margin="0px,20px,0px,0px">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="X" Labels="{Binding Labels, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Y" LabelFormatter="{Binding YFormatter, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 </Window>

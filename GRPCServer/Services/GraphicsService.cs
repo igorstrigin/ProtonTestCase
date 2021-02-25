@@ -21,19 +21,37 @@ namespace GRPCServer
         }
 
 
-        //public override Task<PointsArray> GetRandomGraphic(PointsCount pointsCount, ServerCallContext context) 
-        //{
-        //    PointsArray result = new PointsArray()
+        public override async Task<PointsArray> GetRandomGraphic(PointsCount pointsCount, ServerCallContext context) 
+        {
+            PointsArray result = new PointsArray();
 
-        //    return Task.FromResult( new PointsArray() { GraphicPoints = service.GenerateRandomGraphic(pointsCount.PointsCount_) } ;
-        //} 
-        //public override Task<PointsArray> GetCustomGraphic(PointsArray pointsArray, ServerCallContext context) 
-        //{ 
+            double[] line = await service.GenerateRandomGraphic(pointsCount.PointsCount_);
 
-        //} 
-        //public override Task<PointsArray> GetGraphicFromFile(GraphicNumber graphicNumber, ServerCallContext context) 
-        //{ 
+            result.GraphicPoints.AddRange(line);
 
-        //}
+            return result;
+        } 
+        public override async Task<PointsArray> GetCustomGraphic(PointsArray pointsArray, ServerCallContext context) 
+        {
+            PointsArray result = new PointsArray();
+
+            double[] line = await service.GenerateCustomGraphic(pointsArray.GraphicPoints.ToArray());
+
+            result.GraphicPoints.AddRange(line);
+
+            return result;
+        } 
+
+
+        public override async Task<PointsArray> GetGraphicFromFile(GraphicNumber graphicNumber, ServerCallContext context) 
+        {
+            PointsArray result = new PointsArray();
+
+            double[] line = await service.GetGraphicFromFile(graphicNumber.GraphicNumber_);
+
+            result.GraphicPoints.AddRange(line);
+
+            return result;
+        }
     }
 }

@@ -9,7 +9,7 @@ using GRPCServer;
 
 namespace GRPCServer.Services.Services
 {
-    public class GraphicService : IGraphicGenerator
+    internal class GraphicService : IGraphicGenerator
     {
         public async Task<double[]> GenerateCustomGraphic(params double[] pointsArray)
         {

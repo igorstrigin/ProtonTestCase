@@ -100,17 +100,8 @@ namespace ProtonTestCase.ViewModels
         public void AddNewLines(List<List<double>> lines)
         {
             foreach (var line in lines)
-            {
-                Line = new LineSeries();
-                var newLine = new ChartValues<ObservableValue>();
+                AddNewLine(line.ToArray());
 
-                for (int point = 0; point < line.Count; point++)
-                    newLine.Add(new ObservableValue(line[point]));
-
-                Line.Values = newLine;
-
-                Graphics.Add(Line);
-            }
         }
 
         public void ChangeFirstLine() 

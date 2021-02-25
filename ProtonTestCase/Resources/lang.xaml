@@ -9,4 +9,5 @@
     <v:String x:Key="m_Graphics">Graphics</v:String>
     <v:String x:Key="m_Graphics_Generate">Generate</v:String>
     <v:String x:Key="m_Graphics_Clear">Clear</v:String>
+    <v:String x:Key="m_ChangeGraphic">Change</v:String>
 </ResourceDictionary>

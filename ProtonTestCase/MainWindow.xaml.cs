@@ -1,4 +1,9 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Definitions.Series;
+using LiveCharts.Wpf;
+using ProtonTestCase.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -21,10 +26,15 @@ namespace ProtonTestCase
     /// </summary>
     public partial class MainWindow : Window
     {
+        public GraphicVM VM;
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeLanguageChange();
+
+            VM = new GraphicVM();
+            chartMain.DataContext = VM;
         }
 
 
@@ -79,12 +89,35 @@ namespace ProtonTestCase
 
         private void mGraphicsClear_Click(object sender, RoutedEventArgs e)
         {
-
+            chartMain.Series.Clear();
         }
 
         private void mGraphicsGenerateRandom_Click(object sender, RoutedEventArgs e)
         {
+            VM.AddNewLine();
 
+        }
+
+        private void mChangeGraphic_Click(object sender, RoutedEventArgs e)
+        {
+            VM.ChangeFirstLine();
+
+            //var rand = new Random();
+
+            //SeriesCollection a = VM.Graphics;
+
+            //LineSeries b = (LineSeries)a.FirstOrDefault();
+
+            //ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)b.Values;
+
+            //for (int i = c.Count; i > 0; i--)
+            //    c[i-1] = new ObservableValue(rand.Next(-15,15));
+        }
+
+        private void chartMain_DataClick(object sender, ChartPoint chartPoint)
+        {
+            VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title); 
+            
         }
     }
 }

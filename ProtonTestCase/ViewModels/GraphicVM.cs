@@ -92,7 +92,9 @@ namespace ProtonTestCase.ViewModels
             for (int point = 0; point < line.Length; point++)
                 newLine.Add(new ObservableValue(line[point]));
 
-            Line.Values = newLine;  
+            Line.Values = newLine;
+
+            Line.Title = DateTime.Now.ToString();
 
             Graphics.Add(Line);
         }
@@ -118,18 +120,18 @@ namespace ProtonTestCase.ViewModels
                 c[i - 1] = new ObservableValue(rand.Next(-15, 15));
         }
 
-        public void ChangeCustomLine(string title)
+        public void ChangeCustomLine(string title, ChartValues<ObservableValue> points)
         {
             var rand = new Random();
 
-            SeriesCollection a = Graphics;
+            SeriesCollection seriesCollection = Graphics;
 
-            LineSeries b = (LineSeries)a.Where(x=> x.Title == title).FirstOrDefault();
+            LineSeries Line = (LineSeries)seriesCollection.Where(x=> x.Title == title).FirstOrDefault();
 
-            ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)b.Values;
+            ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)Line.Values;
 
             for (int i = c.Count; i > 0; i--)
-                c[i - 1] = new ObservableValue(rand.Next(-15, 15));
+                c[i - 1] = points[i - 1];
         }
 
     }

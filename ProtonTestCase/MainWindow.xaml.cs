@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProtonTestCase;
 using GRPCServer.Protos;
+using ProtonTestCase.Forms;
 
 namespace ProtonTestCase
 {
@@ -115,22 +116,16 @@ namespace ProtonTestCase
         private void mChangeGraphic_Click(object sender, RoutedEventArgs e)
         {
             VM.ChangeFirstLine();
-
-            //var rand = new Random();
-
-            //SeriesCollection a = VM.Graphics;
-
-            //LineSeries b = (LineSeries)a.FirstOrDefault();
-
-            //ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)b.Values;
-
-            //for (int i = c.Count; i > 0; i--)
-            //    c[i-1] = new ObservableValue(rand.Next(-15,15));
         }
 
         private void chartMain_DataClick(object sender, ChartPoint chartPoint)
         {
-            VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title); 
+            LineSeries line = (LineSeries)chartPoint.SeriesView;
+
+            EditGraphicForm form = new EditGraphicForm(line);
+            form.ShowDialog();   
+
+            VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title,form.newLine); 
             
         }
 

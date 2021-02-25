@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "GRPCServer.Protos";
+
+package graphic;
+
+service Graphics {
+  // Sends a greeting
+  rpc GetRandomGraphic (PointsCount) returns (PointsArray);
+  rpc GetCustomGraphic (PointsArray) returns (PointsArray);
+  rpc GetGraphicFromFile (GraphicNumber) returns (PointsArray);
+}
+
+// The request message containing the user's name.
+message PointsCount {
+  int32 PointsCount = 1;
+}
+
+// The response message containing the greetings.
+message PointsArray {
+  repeated double graphicPoints = 1;
+}
+
+message GraphicNumber {
+	int32 graphicNumber = 1;
+}

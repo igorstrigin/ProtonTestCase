@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProtonTestCase", "ProtonTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRPCServer", "GRPCServer\GRPCServer.csproj", "{C4C158F9-C76E-4EA3-AB08-DA9A52EFE579}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRPCServer.Services", "GRPCServer.Services\GRPCServer.Services.csproj", "{FF88D160-BBCA-4EB4-9701-524FCADA9628}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C4C158F9-C76E-4EA3-AB08-DA9A52EFE579}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C158F9-C76E-4EA3-AB08-DA9A52EFE579}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C158F9-C76E-4EA3-AB08-DA9A52EFE579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF88D160-BBCA-4EB4-9701-524FCADA9628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF88D160-BBCA-4EB4-9701-524FCADA9628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF88D160-BBCA-4EB4-9701-524FCADA9628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF88D160-BBCA-4EB4-9701-524FCADA9628}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

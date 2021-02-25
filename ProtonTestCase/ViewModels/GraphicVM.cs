@@ -83,11 +83,18 @@ namespace ProtonTestCase.ViewModels
             Graphics = new SeriesCollection();
         }
 
-        public void AddNewLine() 
+        public void AddNewLine(double[] line) 
         {
-            Line = new LineSeries() { Values = new ChartValues<ObservableValue> { new ObservableValue(1), new ObservableValue(2), new ObservableValue(34), new ObservableValue(5), new ObservableValue(6) }, Title = DateTime.Now.ToString()};
-            Labels = new string[] { "a", "b", "c", "d", "e" };
 
+            Line = new LineSeries();
+            var newLine = new ChartValues<ObservableValue>();
+
+            for (int point = 0; point < line.Length; point++)
+                newLine.Add(new ObservableValue(line[point]));
+
+            Line.Values = newLine;
+
+            
 
             Graphics.Add(Line);
 
@@ -99,7 +106,7 @@ namespace ProtonTestCase.ViewModels
 
             SeriesCollection a = Graphics;
 
-            LineSeries b = (LineSeries)a.FirstOrDefault();
+            LineSeries b = (LineSeries)(a.FirstOrDefault());
 
             ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)b.Values;
 

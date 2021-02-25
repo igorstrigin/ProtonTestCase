@@ -8,7 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Menu>
-            <MenuItem Header="{DynamicResource m_File}"></MenuItem>
+            <MenuItem Header="{DynamicResource m_File}">
+                <MenuItem Name="mLoad" Header="{DynamicResource m_Load}"></MenuItem>
+            </MenuItem>
             <MenuItem Header="{DynamicResource m_Language}" Name="menuLanguage">
                 <MenuItem Header="{DynamicResource m_ru_Ru}"/>
                 <MenuItem Header="{DynamicResource m_en_US}"/>

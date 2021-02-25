@@ -2,13 +2,23 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
-
+  
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.15.2" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.35.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.36.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\GRPCWpfClient\GRPCWpfClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>

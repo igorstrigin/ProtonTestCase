@@ -1,4 +1,5 @@
-﻿using GRPCServer.Services.Services;
+﻿using GRPCServer.Services.Interfaces;
+using GRPCServer.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,8 @@ namespace GRPCServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+
+            services.AddScoped<IGraphicGenerator, GRPCServer.Services.Services.GraphicService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,7 +35,6 @@ namespace GRPCServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGrpcService<GraphicsService>();
 
 

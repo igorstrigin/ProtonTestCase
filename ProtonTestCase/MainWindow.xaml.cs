@@ -1,4 +1,5 @@
-﻿using LiveCharts;
+﻿using Grpc.Net.Client;
+using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Definitions.Series;
 using LiveCharts.Wpf;
@@ -18,6 +19,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProtonTestCase;
+using GRPCServer.Protos;
 
 namespace ProtonTestCase
 {
@@ -92,9 +95,18 @@ namespace ProtonTestCase
             chartMain.Series.Clear();
         }
 
-        private void mGraphicsGenerateRandom_Click(object sender, RoutedEventArgs e)
+        private async void mGraphicsGenerateRandom_Click(object sender, RoutedEventArgs e)
         {
-            VM.AddNewLine();
+            var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            var client = new Graphics.GraphicsClient(channel);
+
+            
+
+            PointsArray reply = await client.GetRandomGraphicAsync(new PointsCount() {PointsCount_ = 5 });
+
+            VM.AddNewLine(reply.GraphicPoints.ToArray());
+            
+            //VM.AddNewLine();
 
         }
 
@@ -119,5 +131,7 @@ namespace ProtonTestCase
             VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title); 
             
         }
+
+        
     }
 }

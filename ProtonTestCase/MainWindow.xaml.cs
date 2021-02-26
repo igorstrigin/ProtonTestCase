@@ -32,10 +32,13 @@ namespace ProtonTestCase
     {
         public GraphicVM VM;
 
+        private Graphics.GraphicsClient client;
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeLanguageChange();
+            InitializeGrpcConnection();
 
             VM = new GraphicVM();
             chartMain.DataContext = VM;
@@ -98,19 +101,21 @@ namespace ProtonTestCase
 
         private async void mGraphicsGenerateRandom_Click(object sender, RoutedEventArgs e)
         {
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new Graphics.GraphicsClient(channel);
-
             
-
-            PointsArray reply = await client.GetRandomGraphicAsync(new PointsCount() {PointsCount_ = 5 });
-
-            VM.AddNewLine(reply.GraphicPoints.ToArray());
-
-            
-            
-            //VM.AddNewLine();
-
+            try
+            {
+                PointsArray reply = await client.GetRandomGraphicAsync(new PointsCount() { PointsCount_ = 5 });
+                VM.AddNewLine(reply.GraphicPoints.ToArray());
+            }
+            catch (Grpc.Core.RpcException ex) 
+            { 
+                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" + 
+                                Environment.NewLine + "1) Сервер не подключен" +
+                                Environment.NewLine + "2) При запросе возникла ошибка" +
+                                Environment.NewLine + Environment.NewLine + ex.Message
+                                , "Ошибка"
+                                , MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void mChangeGraphic_Click(object sender, RoutedEventArgs e)
@@ -131,26 +136,43 @@ namespace ProtonTestCase
 
         private async void mLoad_Click(object sender, RoutedEventArgs e)
         {
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new Graphics.GraphicsClient(channel);
-
-
-
-            GraphicsArray reply = await client.GetGraphicsFromFileAsync(new EmptyMessage() { Ok = true });
-
-            List<List<double>> lines = new List<List<double>>();
-
-            foreach (var pointsArray in reply.Lines)
+            try
             {
-                List<double> line = new List<double>();
+                GraphicsArray reply = await client.GetGraphicsFromFileAsync(new EmptyMessage() { Ok = true });
 
-                foreach (var point in pointsArray.GraphicPoints)
-                    line.Add(point);
+                List<List<double>> lines = new List<List<double>>();
 
-                lines.Add(line);
+                foreach (var pointsArray in reply.Lines)
+                {
+                    List<double> line = new List<double>();
+
+                    foreach (var point in pointsArray.GraphicPoints)
+                        line.Add(point);
+
+                    lines.Add(line);
+                }
+
+                VM.AddNewLines(lines);
             }
+            catch (Grpc.Core.RpcException ex) 
+            { 
+                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" + 
+                                Environment.NewLine + "1) Сервер не подключен" +
+                                Environment.NewLine + "2) При запросе возникла ошибка" +
+                                Environment.NewLine + Environment.NewLine + ex.Message
+                                , "Ошибка"
+                                , MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-            VM.AddNewLines(lines);
+        private void InitializeGrpcConnection() 
+        {
+            try
+            {
+                var channel = GrpcChannel.ForAddress("https://localhost:5001");
+                client = new Graphics.GraphicsClient(channel);
+            }
+            catch (Exception) { }
         }
     }
 }

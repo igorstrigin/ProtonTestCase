@@ -94,7 +94,7 @@ namespace ProtonTestCase.ViewModels
 
             Line.Values = newLine;
 
-            Line.Title = DateTime.Now.ToString();
+            Line.Title = Guid.NewGuid().ToString();
 
             Graphics.Add(Line);
         }

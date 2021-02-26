@@ -21,7 +21,7 @@ namespace GRPCServer.Services.Services
 
             string path = Environment.CurrentDirectory + "GraphicPoints.txt";
 
-            string result = String.Join(',', pointsArray) + ";";
+            string result = String.Join(';', pointsArray) + "|";
 
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
             {
@@ -58,27 +58,37 @@ namespace GRPCServer.Services.Services
 
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate)) 
             {
+                if (fileStream.Length == 0)
+                    throw new ArgumentNullException("Файл с исходными данными пустой");
+
                 byte[] byteText = new byte[fileStream.Length];
+
 
                 await fileStream.ReadAsync(byteText,0,byteText.Length);
 
                 string textFromFile = Encoding.Default.GetString(byteText);
 
-                string[] Graphics = textFromFile.Split(';');
-
+                string[] Graphics = textFromFile.Split('|');
                 
 
                 foreach (var line in Graphics)
                 {
-                    string[] pointsText = line.Split(',');
+                    string[] pointsText = line.Split(';');
                     List<double> points = new List<double>();
 
                     //проверка на парсинг нулевой строки
                     if (pointsText.Length == 1 && pointsText[0] == "")
                         break;
 
-                    foreach (var point in pointsText)
-                        points.Add(Convert.ToDouble(point));
+                    try
+                    {
+                        foreach (var point in pointsText)
+                            points.Add(Convert.ToDouble(point));
+                    }
+                    catch (FormatException ex) 
+                    {
+                        throw new FormatException("В файле содержатся недопустимые символы", ex);
+                    }
 
                     lines.Add(points);
                 }

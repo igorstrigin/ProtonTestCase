@@ -23,42 +23,90 @@ namespace GRPCServer
 
         public override async Task<PointsArray> GetRandomGraphic(PointsCount pointsCount, ServerCallContext context) 
         {
+            if (pointsCount.PointsCount_ == 0)
+            {
+                logger.LogError("Был получен график с 0 точками");
+                throw new ArgumentNullException("Был получен график с 0 точками");
+            }
+
+            if (pointsCount.PointsCount_ == 1)
+            {
+                logger.LogError("График не может состоять из 1 точки");
+                throw new Exception("График не может состоять из 1 точки");
+            }
+
             PointsArray result = new PointsArray();
 
-            double[] line = await service.GenerateRandomGraphic(pointsCount.PointsCount_);
+            try
+            {
+                double[] line = await service.GenerateRandomGraphic(pointsCount.PointsCount_);
 
-            result.GraphicPoints.AddRange(line);
+                result.GraphicPoints.AddRange(line);
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message);
+                throw new Exception(ex.Message);
+            }
         } 
 
         public override async Task<PointsArray> GetCustomGraphic(PointsArray pointsArray, ServerCallContext context) 
         {
-            PointsArray result = new PointsArray();
+            if (pointsArray.GraphicPoints.Count == 0) 
+            {
+                logger.LogError("Был получен пустой массив");
+                throw new ArgumentNullException("Был получен пустой массив");
+            }
 
-            double[] line = await service.GenerateCustomGraphic(pointsArray.GraphicPoints.ToArray());
+            if (pointsArray.GraphicPoints.Count == 1)
+            {
+                logger.LogError("График не может состоять из 1 точки");
+                throw new Exception("График не может состоять из 1 точки");
+            }
 
-            result.GraphicPoints.AddRange(line);
+            try
+            {
+                PointsArray result = new PointsArray();
 
-            return result;
+                double[] line = await service.GenerateCustomGraphic(pointsArray.GraphicPoints.ToArray());
+
+                result.GraphicPoints.AddRange(line);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         } 
 
 
         public override async Task<GraphicsArray> GetGraphicsFromFile(EmptyMessage a, ServerCallContext context) 
         {
-            GraphicsArray result = new GraphicsArray();
-
-            List<List<double>> lines = await service.GetGraphicsFromFile();
-
-            foreach (var line in lines)
+            try
             {
-                PointsArray newLine = new PointsArray();
-                newLine.GraphicPoints.Add(line.ToArray());
-                result.Lines.Add(newLine);
+                GraphicsArray result = new GraphicsArray();
+
+                List<List<double>> lines = await service.GetGraphicsFromFile();
+
+                foreach (var line in lines)
+                {
+                    PointsArray newLine = new PointsArray();
+                    newLine.GraphicPoints.Add(line.ToArray());
+                    result.Lines.Add(newLine);
+                }
+
+
+                return result;
             }
-
-
-            return result;
+            catch (Exception ex) 
+            {
+                logger.LogError(ex.Message);
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

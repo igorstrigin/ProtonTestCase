@@ -23,10 +23,10 @@
         </Menu>
         <lvc:CartesianChart Name="chartMain" Series="{Binding Graphics, UpdateSourceTrigger=PropertyChanged}" DataClick="chartMain_DataClick" LegendLocation="Right" Margin="0px,20px,0px,0px">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="X" Labels="{Binding Labels, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
+                <lvc:Axis Name="X"  Title="X" Labels="{Binding Labels, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Y" LabelFormatter="{Binding YFormatter, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
+                <lvc:Axis Name="Y" Title="Y" LabelFormatter="{Binding YFormatter, UpdateSourceTrigger=PropertyChanged}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>

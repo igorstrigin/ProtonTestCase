@@ -132,9 +132,12 @@ namespace ProtonTestCase.ViewModels
 
             try
             {
-
                 for (int i = c.Count; i > 0; i--)
                     c[i - 1] = points[i - 1];
+
+                if (c.Count < points.Count)
+                    for (int i = c.Count; i < points.Count; i++)
+                        c.Add(points[i]);
             }
             //ошибка может возникнуть при закрытии окна
             catch (Exception ex) { }

@@ -3,6 +3,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,14 +44,31 @@ namespace ProtonTestCase.Forms
             List<string> newStringLine = tbEditGraphic.Text.Split(Environment.NewLine).ToList();
 
             if (newStringLine.Count == 0) {
-                MessageBox.Show("Нельзя создать график без точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("Нельзя создать график без точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("You cannot create a graph without points", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                    
             }
 
             if (newStringLine.Count == 1)
             {
-                MessageBox.Show("График должен состоять хотя бы из 2 точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("График должен состоять хотя бы из 2 точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                else
+                {
+                   MessageBox.Show("The graph must contain at least 2 points", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                   return;
+                }
             }
 
             try
@@ -68,7 +86,16 @@ namespace ProtonTestCase.Forms
             }
             catch (FormatException) 
             {
-                MessageBox.Show("Вы ввели недопустимые символы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("Вы ввели недопустимые символы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("You entered invalid characters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
 
             

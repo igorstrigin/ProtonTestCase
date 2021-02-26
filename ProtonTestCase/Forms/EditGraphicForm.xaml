@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal" Height="150">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Width="75" Text="{DynamicResource label_EditGraphic}" Margin="5"/>
-            <TextBox Name="tbEditGraphic" MinWidth="200" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Name="tbEditGraphic" MinWidth="200" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
             <Button Name="btnEdit" Content="{DynamicResource btn_Send}" Height="45" Width="80" Click="btnEdit_Click" Margin="5"></Button>
         </StackPanel>
     </Grid>

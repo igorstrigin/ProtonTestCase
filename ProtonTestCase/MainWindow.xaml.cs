@@ -108,13 +108,25 @@ namespace ProtonTestCase
                 VM.AddNewLine(reply.GraphicPoints.ToArray());
             }
             catch (Grpc.Core.RpcException ex) 
-            { 
-                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" + 
-                                Environment.NewLine + "1) Сервер не подключен" +
-                                Environment.NewLine + "2) При запросе возникла ошибка" +
-                                Environment.NewLine + Environment.NewLine + ex.Message
-                                , "Ошибка"
-                                , MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" +
+                                    Environment.NewLine + "1) Сервер не подключен" +
+                                    Environment.NewLine + "2) При запросе возникла ошибка" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Ошибка"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show("There is a problem with the server. Possible reasons:" +
+                                    Environment.NewLine + "1) Server is not connected" +
+                                    Environment.NewLine + "2) An error occurred when requesting" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Error"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -144,12 +156,26 @@ namespace ProtonTestCase
             }
             catch (Grpc.Core.RpcException ex)
             {
-                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" +
-                                Environment.NewLine + "1) Сервер не подключен" +
-                                Environment.NewLine + "2) При запросе возникла ошибка" +
-                                Environment.NewLine + Environment.NewLine + ex.Message
-                                , "Ошибка"
-                                , MessageBoxButton.OK, MessageBoxImage.Error);
+
+
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" +
+                                    Environment.NewLine + "1) Сервер не подключен" +
+                                    Environment.NewLine + "2) При запросе возникла ошибка" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Ошибка"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show("There is a problem with the server. Possible reasons:" +
+                                    Environment.NewLine + "1) Server is not connected" +
+                                    Environment.NewLine + "2) An error occurred when requesting" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Error"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title,form.newLine); 
@@ -177,13 +203,26 @@ namespace ProtonTestCase
                 VM.AddNewLines(lines);
             }
             catch (Grpc.Core.RpcException ex) 
-            { 
-                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" + 
-                                Environment.NewLine + "1) Сервер не подключен" +
-                                Environment.NewLine + "2) При запросе возникла ошибка" +
-                                Environment.NewLine + Environment.NewLine + ex.Message
-                                , "Ошибка"
-                                , MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                {
+                    MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" +
+                                    Environment.NewLine + "1) Сервер не подключен" +
+                                    Environment.NewLine + "2) При запросе возникла ошибка" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Ошибка"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else 
+                {
+                    MessageBox.Show("There is a problem with the server. Possible reasons:" +
+                                    Environment.NewLine + "1) Server is not connected" +
+                                    Environment.NewLine + "2) An error occurred when requesting" +
+                                    Environment.NewLine + Environment.NewLine + ex.Message
+                                    , "Error"
+                                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
             }
         }
 
@@ -196,5 +235,13 @@ namespace ProtonTestCase
             }
             catch (Exception) { }
         }
+
+
+
+
+
+
+
+
     }
 }

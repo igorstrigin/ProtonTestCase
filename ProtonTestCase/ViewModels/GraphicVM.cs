@@ -136,6 +136,7 @@ namespace ProtonTestCase.ViewModels
                 for (int i = c.Count; i > 0; i--)
                     c[i - 1] = points[i - 1];
             }
+            //ошибка может возникнуть при закрытии окна
             catch (Exception ex) { }
         }
 

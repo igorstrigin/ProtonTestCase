@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="{DynamicResource form_EditGraphic}" Height="100" Width="400">
+        Title="{DynamicResource form_EditGraphic}" Height="200" Width="400">
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="60">
-            <TextBlock MaxWidth="100" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{DynamicResource label_EditGraphic}" Margin="5"/>
-            <TextBox Name="tbEditGraphic" MinWidth="200" Height="45" Margin="5"></TextBox>
-            <Button Name="btnEdit" Content="{DynamicResource btn_Send}" Height="45" Width="50" Click="btnEdit_Click" Margin="5"></Button>
+        <StackPanel Orientation="Horizontal" Height="150">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Width="75" Text="{DynamicResource label_EditGraphic}" Margin="5"/>
+            <TextBox Name="tbEditGraphic" MinWidth="200" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            <Button Name="btnEdit" Content="{DynamicResource btn_Send}" Height="45" Width="80" Click="btnEdit_Click" Margin="5"></Button>
         </StackPanel>
     </Grid>
 </Window>

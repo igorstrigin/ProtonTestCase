@@ -130,7 +130,11 @@ namespace ProtonTestCase
             EditGraphicForm form = new EditGraphicForm(line);
             form.ShowDialog();
 
-            //добавление в файл на сервере
+            //проверка на закрытие формы
+            if (form.newLinePoints.Count == 0 || form.newLine.Count == 0)
+                return;
+
+            
 
             try
             {

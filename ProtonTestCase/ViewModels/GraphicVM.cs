@@ -130,8 +130,13 @@ namespace ProtonTestCase.ViewModels
 
             ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)Line.Values;
 
-            for (int i = c.Count; i > 0; i--)
-                c[i - 1] = points[i - 1];
+            try
+            {
+
+                for (int i = c.Count; i > 0; i--)
+                    c[i - 1] = points[i - 1];
+            }
+            catch (Exception ex) { }
         }
 
     }

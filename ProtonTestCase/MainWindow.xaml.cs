@@ -123,12 +123,30 @@ namespace ProtonTestCase
             VM.ChangeFirstLine();
         }
 
-        private void chartMain_DataClick(object sender, ChartPoint chartPoint)
+        private async void chartMain_DataClick(object sender, ChartPoint chartPoint)
         {
             LineSeries line = (LineSeries)chartPoint.SeriesView;
 
             EditGraphicForm form = new EditGraphicForm(line);
-            form.ShowDialog();   
+            form.ShowDialog();
+
+            //добавление в файл на сервере
+
+            try
+            {
+                PointsArray pointsArray = new PointsArray();
+                pointsArray.GraphicPoints.Add(form.newLinePoints);
+                await client.GetCustomGraphicAsync(pointsArray);
+            }
+            catch (Grpc.Core.RpcException ex)
+            {
+                MessageBox.Show("Возникли проблемы с сервером. Возможные причины:" +
+                                Environment.NewLine + "1) Сервер не подключен" +
+                                Environment.NewLine + "2) При запросе возникла ошибка" +
+                                Environment.NewLine + Environment.NewLine + ex.Message
+                                , "Ошибка"
+                                , MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             VM.ChangeCustomLine(((LineSeries)chartPoint.SeriesView).Title,form.newLine); 
             

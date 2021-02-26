@@ -23,6 +23,7 @@ namespace ProtonTestCase.Forms
     public partial class EditGraphicForm : Window
     {
         public ChartValues<ObservableValue> newLine;
+        public List<double> newLinePoints = new List<double>();
 
         public EditGraphicForm(LineSeries line)
         {
@@ -34,20 +35,43 @@ namespace ProtonTestCase.Forms
                 pointsText.Add(point.Value.ToString());
 
 
-            tbEditGraphic.Text = string.Join(";" + Environment.NewLine, pointsText);
+            tbEditGraphic.Text = string.Join(Environment.NewLine, pointsText);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            List<string> newStringLine = tbEditGraphic.Text.Split(';').ToList();
+            List<string> newStringLine = tbEditGraphic.Text.Split(Environment.NewLine).ToList();
 
+            if (newStringLine.Count == 0) {
+                MessageBox.Show("Нельзя создать график без точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            newLine = new ChartValues<ObservableValue>();
+            if (newStringLine.Count == 1)
+            {
+                MessageBox.Show("График должен состоять хотя бы из 2 точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            foreach (var point in newStringLine)
-                newLine.Add(new ObservableValue(Convert.ToDouble(point)));
+            try
+            {
+                newLine = new ChartValues<ObservableValue>();
 
-            this.Close();
+                foreach (var point in newStringLine)
+                {
+                    double value = Convert.ToDouble(point);
+                    newLinePoints.Add(value);
+                    newLine.Add(new ObservableValue(value));
+                }
+
+                this.Close();
+            }
+            catch (FormatException) 
+            {
+                MessageBox.Show("Вы ввели недопустимые символы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            
         }
     }
 }

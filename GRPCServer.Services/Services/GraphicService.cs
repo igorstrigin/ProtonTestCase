@@ -11,6 +11,9 @@ namespace GRPCServer.Services.Services
 {
     public class GraphicService : IGraphicGenerator
     {
+
+        string path = Directory.GetCurrentDirectory() + "\\GraphicPoints.txt";
+
         public async Task<double[]> GenerateCustomGraphic(params double[] pointsArray)
         {
             if (pointsArray.Length == 0)
@@ -19,15 +22,11 @@ namespace GRPCServer.Services.Services
             if (pointsArray.Length == 1)
                 throw new Exception("График должен состоять минимум из 2 точек");
 
-            string path = Environment.CurrentDirectory + "GraphicPoints.txt";
+            
 
-            string result = String.Join(';', pointsArray) + "|";
+            string result = String.Join(';', pointsArray) + Environment.NewLine;
 
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                byte[] resultByte = new byte[result.Length];
-                await fileStream.WriteAsync(Encoding.Default.GetBytes(result));
-            }
+            File.AppendAllTextAsync(path, result);
 
             return pointsArray;
         }
@@ -54,7 +53,7 @@ namespace GRPCServer.Services.Services
         {
             List<List<double>> lines = new List<List<double>>();
 
-            string path = Directory.GetCurrentDirectory() + "\\GraphicPoints.txt";
+            
 
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate)) 
             {
@@ -68,7 +67,7 @@ namespace GRPCServer.Services.Services
 
                 string textFromFile = Encoding.Default.GetString(byteText);
 
-                string[] Graphics = textFromFile.Split('|');
+                string[] Graphics = textFromFile.Split(Environment.NewLine);
                 
 
                 foreach (var line in Graphics)

@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using System.Text;
+using System.Globalization;
+using System.Windows;
 
 namespace ProtonTestCase.ViewModels
 {
@@ -128,16 +130,59 @@ namespace ProtonTestCase.ViewModels
 
             LineSeries Line = (LineSeries)seriesCollection.Where(x=> x.Title == title).FirstOrDefault();
 
-            ChartValues<ObservableValue> c = (ChartValues<ObservableValue>)Line.Values;
+            ChartValues<ObservableValue> line = (ChartValues<ObservableValue>)Line.Values;
 
             try
             {
-                for (int i = c.Count; i > 0; i--)
-                    c[i - 1] = points[i - 1];
+                //удаленные точки
+                if (line.Count > points.Count)
+                {
+                    if (points.Count == 0)
+                    {
+                        if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                        {
+                            MessageBox.Show("Нельзя создать график без точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("You cannot create a graph without points", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
 
-                if (c.Count < points.Count)
-                    for (int i = c.Count; i < points.Count; i++)
-                        c.Add(points[i]);
+                    if (points.Count == 1)
+                    {
+                        if (App.Language == CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"))
+                        {
+                            MessageBox.Show("График должен состоять хотя бы из 2 точек", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("The graph must contain at least 2 points", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
+
+                    for (int i = line.Count; i > 0; i--)
+                    {
+                        if (points.Count <= i - 1)
+                            line.Remove(line[i - 1]);
+                        else
+                            line[i - 1] = points[i - 1];
+                    }
+
+                }
+
+                //перенос точек
+                for (int i = line.Count; i > 0; i--)
+                    line[i - 1] = points[i - 1];
+
+                //добавление новых точек
+                if (line.Count < points.Count)
+                    for (int i = line.Count; i < points.Count; i++)
+                        line.Add(points[i]);
             }
             //ошибка может возникнуть при закрытии окна
             catch (Exception ex) { }

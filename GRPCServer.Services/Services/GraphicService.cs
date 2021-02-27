@@ -26,7 +26,7 @@ namespace GRPCServer.Services.Services
 
             string result = String.Join(';', pointsArray) + Environment.NewLine;
 
-            File.AppendAllTextAsync(path, result);
+            await File.AppendAllTextAsync(path, result);
 
             return pointsArray;
         }
@@ -66,6 +66,8 @@ namespace GRPCServer.Services.Services
                 await fileStream.ReadAsync(byteText,0,byteText.Length);
 
                 string textFromFile = Encoding.Default.GetString(byteText);
+
+                textFromFile = textFromFile.TrimStart();
 
                 string[] Graphics = textFromFile.Split(Environment.NewLine);
                 
